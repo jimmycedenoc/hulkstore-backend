@@ -1,9 +1,12 @@
 package com.todo1.hulkstore.service;
 
+import com.todo1.hulkstore.entity.CategoryEntity;
 import com.todo1.hulkstore.entity.ProductEntity;
 import com.todo1.hulkstore.entity.SaleEntity;
+import com.todo1.hulkstore.repository.CategoryRepository;
 import com.todo1.hulkstore.repository.ProductRepository;
 import com.todo1.hulkstore.repository.SaleRepository;
+import com.todo1.hulkstore.service.impl.CategoryService;
 import com.todo1.hulkstore.service.impl.ProductService;
 import com.todo1.hulkstore.service.impl.SaleService;
 import org.junit.jupiter.api.AfterEach;
@@ -21,18 +24,26 @@ public class SaleServiceTest {
     private SaleRepository saleRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @AfterEach
     void tearDown() {
         saleRepository.deleteAllInBatch();
         productRepository.deleteAllInBatch();
+        categoryRepository.deleteAllInBatch();
     }
 
 
     @Test
     void getAllProducts() throws Exception {
+        categoryRepository.deleteAllInBatch();
+        CategoryService categoryService = new CategoryService(categoryRepository);
+        CategoryEntity category = new CategoryEntity("Camisas", true);
+        categoryService.save(category);
+
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, 1L, 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
         productService.save(productEntity);
 
         SaleEntity saleEntity = new SaleEntity(new Date(), 2L, 1L, productEntity.getId(), 10.25);
@@ -50,8 +61,13 @@ public class SaleServiceTest {
 
     @Test
     void save() throws Exception {
+        categoryRepository.deleteAllInBatch();
+        CategoryService categoryService = new CategoryService(categoryRepository);
+        CategoryEntity category = new CategoryEntity("Camisas", true);
+        categoryService.save(category);
+
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, 1L, 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
         productService.save(productEntity);
 
         SaleService saleService = new SaleService(saleRepository);
@@ -63,8 +79,13 @@ public class SaleServiceTest {
 
     @Test
     void update() throws Exception {
+        categoryRepository.deleteAllInBatch();
+        CategoryService categoryService = new CategoryService(categoryRepository);
+        CategoryEntity category = new CategoryEntity("Camisas", true);
+        categoryService.save(category);
+
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, 1L, 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
         productService.save(productEntity);
 
         SaleService saleService = new SaleService(saleRepository);

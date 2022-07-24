@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("categoryController")
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController {
     private HttpStatus status = HttpStatus.OK;
 

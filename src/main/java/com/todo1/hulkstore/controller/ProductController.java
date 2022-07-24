@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("productController")
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
     private HttpStatus status = HttpStatus.OK;
 

@@ -48,7 +48,7 @@ public class CategoryControllerTest {
         categoryList.add(new CategoryEntity("Alternativos", true));
         when(categoryService.getAllCategories()).thenReturn(categoryList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/category")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/category")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(jsonPath("$", hasSize(6))).andDo(print());
     }
@@ -61,7 +61,7 @@ public class CategoryControllerTest {
 
         when(categoryService.save(any(CategoryEntity.class))).thenReturn(category);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/category")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/category")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(categoryJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -79,7 +79,7 @@ public class CategoryControllerTest {
 
         when(categoryService.update(any(CategoryEntity.class))).thenReturn(category);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/category")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/category")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(categoryJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())

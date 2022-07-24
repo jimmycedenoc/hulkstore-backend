@@ -44,7 +44,7 @@ public class SaleControllerTest {
         saleEntityList.add(new SaleEntity(new Date(), 2L, 1L, 1L, 10.00));
         when(saleService.getAllSales()).thenReturn(saleEntityList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/sale")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/sale")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(jsonPath("$", hasSize(2))).andDo(print());
     }
@@ -57,7 +57,7 @@ public class SaleControllerTest {
 
         when(saleService.save(any(SaleEntity.class))).thenReturn(sale);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/sale")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/sale")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(saleJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -77,7 +77,7 @@ public class SaleControllerTest {
 
         when(saleService.update(any(SaleEntity.class))).thenReturn(sale);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/sale")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/sale")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(saleJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())

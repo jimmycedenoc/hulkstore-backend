@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("inventaryController")
-@RequestMapping("/inventory")
+@RequestMapping("/api/inventory")
 public class InventoryController {
     private HttpStatus status = HttpStatus.OK;
 

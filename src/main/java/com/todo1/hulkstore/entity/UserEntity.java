@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table(name = "USER")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
+    @Column(name = "`id`")
     private Long id;
     private String username;
     private String password;
@@ -16,7 +17,7 @@ public class UserEntity {
     }
 
     public UserEntity(String username, String password) {
-        this.username= username;
+        this.username = username;
         this.password = password;
     }
 

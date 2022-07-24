@@ -6,8 +6,9 @@ import java.util.List;
 @Entity
 @Table(name = "CATEGORY")
 public class CategoryEntity {
+    @TableGenerator(name = "category_gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", pkColumnValue = "Addr_Gen", initialValue = 10, allocationSize = 100)
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "category_gen")
     private Long id;
     private String name;
     private boolean active;

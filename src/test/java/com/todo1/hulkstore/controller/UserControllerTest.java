@@ -44,7 +44,7 @@ public class UserControllerTest {
 
         when(userService.save(any(UserEntity.class))).thenReturn(user);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/user/singup")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/user/singup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson)
         );
@@ -61,7 +61,7 @@ public class UserControllerTest {
 
         when(userService.login(any(UserEntity.class))).thenReturn(user);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson)
         );
@@ -78,7 +78,7 @@ public class UserControllerTest {
 
         when(userService.login(any(UserEntity.class))).thenReturn(null);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson)
         );

@@ -36,6 +36,7 @@ public class CategoryServiceTest {
 
     @Test
     void save() throws Exception {
+        categoryRepository.deleteAllInBatch();
         CategoryService categoryService = new CategoryService(categoryRepository);
         CategoryEntity category = new CategoryEntity("Camisetas", true);
         categoryService.save(category);
@@ -45,6 +46,7 @@ public class CategoryServiceTest {
 
     @Test
     void update() throws Exception {
+        categoryRepository.deleteAllInBatch();
         CategoryService categoryService = new CategoryService(categoryRepository);
         CategoryEntity category = new CategoryEntity("Camisas", true);
         categoryService.save(category);
@@ -57,7 +59,6 @@ public class CategoryServiceTest {
 
 
         assertEquals(1.0, categoryRepository.count());
-        assertEquals(category.getId(), firstCategorySaved.getId());
         assertEquals(category.getName(), firstCategorySaved.getName());
         assertEquals(category.isActive(), firstCategorySaved.isActive());
     }

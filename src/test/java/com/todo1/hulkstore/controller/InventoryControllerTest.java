@@ -44,7 +44,7 @@ public class InventoryControllerTest {
         inventoryEntityList.add(new InventoryEntity(new Date(), 2L, 1L, 1L, 10.00, "Venta"));
         when(inventoryService.getAllInventories()).thenReturn(inventoryEntityList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/inventory")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/inventory")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(jsonPath("$", hasSize(2))).andDo(print());
     }
@@ -57,7 +57,7 @@ public class InventoryControllerTest {
 
         when(inventoryService.save(any(InventoryEntity.class))).thenReturn(inventory);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/inventory")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/inventory")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(inventoryJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -78,7 +78,7 @@ public class InventoryControllerTest {
 
         when(inventoryService.update(any(InventoryEntity.class))).thenReturn(inventory);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/inventory")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/inventory")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(inventoryJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())

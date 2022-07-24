@@ -43,7 +43,7 @@ public class ProductControllerTest {
         productEntityList.add(new ProductEntity("Camisa negra", 0L, 1L, 15.00));
         when(productService.getAllProducts()).thenReturn(productEntityList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/product")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(jsonPath("$", hasSize(2))).andDo(print());
     }
@@ -56,7 +56,7 @@ public class ProductControllerTest {
 
         when(productService.save(any(ProductEntity.class))).thenReturn(product);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/product")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(productJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -76,7 +76,7 @@ public class ProductControllerTest {
 
         when(productService.update(any(ProductEntity.class))).thenReturn(product);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/product")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(productJson)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("userController")
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
     private HttpStatus status = HttpStatus.OK;
 
