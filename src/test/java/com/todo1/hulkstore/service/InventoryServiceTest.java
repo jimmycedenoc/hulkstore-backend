@@ -1,23 +1,15 @@
 package com.todo1.hulkstore.service;
 
-import com.todo1.hulkstore.entity.CategoryEntity;
-import com.todo1.hulkstore.entity.InventoryEntity;
-import com.todo1.hulkstore.entity.ProductEntity;
-import com.todo1.hulkstore.entity.SaleEntity;
-import com.todo1.hulkstore.repository.CategoryRepository;
-import com.todo1.hulkstore.repository.InventoryRepository;
-import com.todo1.hulkstore.repository.ProductRepository;
-import com.todo1.hulkstore.repository.SaleRepository;
-import com.todo1.hulkstore.service.impl.CategoryService;
-import com.todo1.hulkstore.service.impl.InventoryService;
-import com.todo1.hulkstore.service.impl.ProductService;
-import com.todo1.hulkstore.service.impl.SaleService;
+import com.todo1.hulkstore.entity.*;
+import com.todo1.hulkstore.repository.*;
+import com.todo1.hulkstore.service.impl.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,35 +23,44 @@ public class InventoryServiceTest {
     private InventoryRepository inventoryRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
     @AfterEach
     void tearDown() {
         inventoryRepository.deleteAllInBatch();
         saleRepository.deleteAllInBatch();
         productRepository.deleteAllInBatch();
         categoryRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
 
     @Test
     void getAllInventories() throws Exception {
+        userRepository.deleteAllInBatch();
+        UserService userService = new UserService(userRepository);
+        UserEntity userEntity = new UserEntity("test", "12345");
+        userService.save(userEntity);
+
         categoryRepository.deleteAllInBatch();
         CategoryService categoryService = new CategoryService(categoryRepository);
         CategoryEntity category = new CategoryEntity("Camisas", true);
         categoryService.save(category);
 
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productService.save(productEntity);
 
-        SaleService saleService = new SaleService(saleRepository);
-        SaleEntity saleEntity = new SaleEntity(new Date(), 2L, 1L, productEntity.getId(), 10.25);
+        SaleService saleService = new SaleService(saleRepository, inventoryRepository, productRepository);
+        SaleEntity saleEntity = new SaleEntity(new Date(), 2L, userEntity.getId(), productEntity.getId(), 10.25);
         saleService.save(saleEntity);
 
-        InventoryEntity inventoryEntity = new InventoryEntity(new Date(), 2L, saleEntity.getId(), productEntity.getId(), 10.25, "Compra");
+        InventoryEntity inventoryEntity = new InventoryEntity(new Date(), 2L, saleEntity.getId(), null, productEntity.getId(), 10.25, "Compra");
         inventoryRepository.save(inventoryEntity);
 
         InventoryService inventoryService = new InventoryService(inventoryRepository);
-        InventoryEntity firstInventory = inventoryService.getAllInventories().get(0);
+        List<InventoryEntity> inventoryEntityList = inventoryService.getAllInventories();
+        InventoryEntity firstInventory = inventoryEntityList.get(inventoryEntityList.size() - 1);
 
         assertEquals(inventoryEntity.getId(), firstInventory.getId());
         assertEquals(inventoryEntity.getQuantity(), firstInventory.getQuantity());
@@ -71,21 +72,24 @@ public class InventoryServiceTest {
 
     @Test
     void save() throws Exception {
+        inventoryRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
+        UserService userService = new UserService(userRepository);
+        UserEntity userEntity = new UserEntity("test", "12345");
+        userService.save(userEntity);
+
         categoryRepository.deleteAllInBatch();
         CategoryService categoryService = new CategoryService(categoryRepository);
         CategoryEntity category = new CategoryEntity("Camisas", true);
         categoryService.save(category);
 
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productService.save(productEntity);
 
-        SaleService saleService = new SaleService(saleRepository);
-        SaleEntity saleEntity = new SaleEntity(new Date(), 2L, 1L, productEntity.getId(), 10.25);
-        saleService.save(saleEntity);
 
         InventoryService inventoryService = new InventoryService(inventoryRepository);
-        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, saleEntity.getId(), productEntity.getId(), 10.25, "Compra");
+        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, null, null, productEntity.getId(), 10.25, "Compra");
         inventoryService.save(inventory);
 
         assertEquals(1.0, inventoryRepository.count());
@@ -93,28 +97,35 @@ public class InventoryServiceTest {
 
     @Test
     void update() throws Exception {
+        userRepository.deleteAllInBatch();
+        UserService userService = new UserService(userRepository);
+        UserEntity userEntity = new UserEntity("test", "12345");
+        userService.save(userEntity);
+
         categoryRepository.deleteAllInBatch();
         CategoryService categoryService = new CategoryService(categoryRepository);
         CategoryEntity category = new CategoryEntity("Camisas", true);
         categoryService.save(category);
 
         ProductService productService = new ProductService(productRepository);
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productService.save(productEntity);
 
-        SaleService saleService = new SaleService(saleRepository);
-        SaleEntity saleEntity = new SaleEntity(new Date(), 2L, 1L, productEntity.getId(), 10.25);
+        SaleService saleService = new SaleService(saleRepository, inventoryRepository, productRepository);
+        SaleEntity saleEntity = new SaleEntity(new Date(), 2L, userEntity.getId(), productEntity.getId(), 10.25);
         saleService.save(saleEntity);
 
         InventoryService inventoryService = new InventoryService(inventoryRepository);
-        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, saleEntity.getId(), productEntity.getId(), 10.25, "Compra");
+        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, saleEntity.getId(), null, productEntity.getId(), 10.25, "Compra");
         inventoryService.save(inventory);
 
         inventory.setQuantity(10L);
         inventory.setUnitValue(12.00);
         inventoryService.update(inventory);
 
-        InventoryEntity firstInventorySaved = inventoryService.getAllInventories().get(0);
+        List<InventoryEntity> inventoryEntityList = inventoryService.getAllInventories();
+        InventoryEntity firstInventorySaved = inventoryEntityList.get(inventoryEntityList.size() - 1);
+
 
         assertEquals(inventory.getId(), firstInventorySaved.getId());
         assertEquals(inventory.getQuantity(), firstInventorySaved.getQuantity());

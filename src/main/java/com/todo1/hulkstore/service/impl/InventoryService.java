@@ -43,4 +43,13 @@ public class InventoryService implements IInventoryService {
 
         return inventoryRepository.save(existingInventory);
     }
+
+    @Override
+    public InventoryEntity getBySaleCode(Long saleCode) throws Exception {
+        return inventoryRepository.getBySaleCode(saleCode);
+    }
+    @Override
+    public InventoryEntity getByBuyCode(Long buyCode) throws Exception {
+        return inventoryRepository.getByBuyCode(buyCode);
+    }
 }

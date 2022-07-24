@@ -11,6 +11,8 @@ import java.util.List;
 
 @Service
 public class ProductService implements IProductService {
+
+    public static enum InventoryType {SALE, BUY};
     @Autowired
     @Lazy
     private ProductRepository productRepository;
@@ -40,5 +42,23 @@ public class ProductService implements IProductService {
         existingProduct.setUnitValue(product.getUnitValue());
 
         return productRepository.save(existingProduct);
+    }
+
+    @Override
+    public void refreshStock(Long quantity, InventoryType inventoryType, Long producCode) throws Exception{
+        ProductEntity productEntity = productRepository.findById(producCode).orElse(null);
+        if(productEntity != null) {
+            Long stock = null;
+            if(inventoryType == InventoryType.SALE) {
+                stock = productEntity.getStock() - quantity;
+            } else {
+                stock = productEntity.getStock() + quantity;
+            }
+            if (stock == null && stock < 0) {
+                throw new Exception("No puede quedar un stock negativo");
+            }
+            productEntity.setStock(stock);
+            this.update(productEntity);
+        }
     }
 }

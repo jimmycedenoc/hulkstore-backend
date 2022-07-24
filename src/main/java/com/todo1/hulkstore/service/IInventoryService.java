@@ -8,4 +8,6 @@ public interface IInventoryService {
     List<InventoryEntity> getAllInventories() throws Exception;
     InventoryEntity save(InventoryEntity product) throws Exception;
     InventoryEntity update(InventoryEntity product) throws Exception;
+    InventoryEntity getBySaleCode(Long saleCode) throws Exception;
+    InventoryEntity getByBuyCode(Long buyCode) throws Exception;
 }

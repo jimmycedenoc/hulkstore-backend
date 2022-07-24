@@ -39,8 +39,8 @@ public class ProductControllerTest {
     @Test
     void getAllProducts() throws Exception {
         List<ProductEntity> productEntityList = new ArrayList<ProductEntity>();
-        productEntityList.add(new ProductEntity("Camisa rosada", 0L, 1L, 10.00));
-        productEntityList.add(new ProductEntity("Camisa negra", 0L, 1L, 15.00));
+        productEntityList.add(new ProductEntity("Camisa rosada", 100L, 1L, 10.00));
+        productEntityList.add(new ProductEntity("Camisa negra", 100L, 1L, 15.00));
         when(productService.getAllProducts()).thenReturn(productEntityList);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product")
@@ -50,7 +50,7 @@ public class ProductControllerTest {
 
     @Test
     void saveProductSuccess() throws Exception {
-        ProductEntity product = new ProductEntity("Camisa rosada", 0L, 1L, 10.00);
+        ProductEntity product = new ProductEntity("Camisa rosada", 100L, 1L, 10.00);
         ObjectMapper objectMapper = new ObjectMapper();
         String productJson = objectMapper.writeValueAsString(product);
 
@@ -63,14 +63,14 @@ public class ProductControllerTest {
         );
         resultActions.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Camisa rosada"))
-                .andExpect(jsonPath("$.stock").value(0L))
+                .andExpect(jsonPath("$.stock").value(100L))
                 .andExpect(jsonPath("$.categoryCode").value(1L))
                 .andExpect(jsonPath("$.unitValue").value(10.00));
     }
 
     @Test
     void updateProductSuccess() throws Exception {
-        ProductEntity product = new ProductEntity("Camisa rosada", 0L, 1L, 10.00);
+        ProductEntity product = new ProductEntity("Camisa rosada", 100L, 1L, 10.00);
         ObjectMapper objectMapper = new ObjectMapper();
         String productJson = objectMapper.writeValueAsString(product);
 
@@ -83,7 +83,7 @@ public class ProductControllerTest {
         );
         resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Camisa rosada"))
-                .andExpect(jsonPath("$.stock").value(0L))
+                .andExpect(jsonPath("$.stock").value(100L))
                 .andExpect(jsonPath("$.categoryCode").value(1L))
                 .andExpect(jsonPath("$.unitValue").value(10.00));
     }

@@ -18,6 +18,7 @@ public class UserServiceTest {
 
     @Test
     void save() throws Exception {
+        userRepository.deleteAllInBatch();
         UserService userService = new UserService(userRepository);
         UserEntity userEntity = new UserEntity("jimmy", "12345");
         userService.save(userEntity);

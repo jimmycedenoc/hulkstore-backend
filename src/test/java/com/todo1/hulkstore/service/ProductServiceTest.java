@@ -33,7 +33,7 @@ public class ProductServiceTest {
         CategoryEntity category = new CategoryEntity("Camisas", true);
         categoryService.save(category);
 
-        ProductEntity productEntity = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity productEntity = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productRepository.save(productEntity);
 
         ProductService productService = new ProductService(productRepository);
@@ -54,7 +54,7 @@ public class ProductServiceTest {
         categoryService.save(category);
 
         ProductService productService = new ProductService(productRepository);
-        ProductEntity product = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity product = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productService.save(product);
 
         assertEquals(1.0, productRepository.count());
@@ -68,7 +68,7 @@ public class ProductServiceTest {
         categoryService.save(category);
 
         ProductService productService = new ProductService(productRepository);
-        ProductEntity product = new ProductEntity("Camisa rosada", 0L, category.getId(), 10.00);
+        ProductEntity product = new ProductEntity("Camisa rosada", 100L, category.getId(), 10.00);
         productService.save(product);
 
         product.setName("Camisa negra");

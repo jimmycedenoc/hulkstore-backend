@@ -1,6 +1,8 @@
 package com.todo1.hulkstore.controller;
 
+import com.todo1.hulkstore.entity.BuyEntity;
 import com.todo1.hulkstore.entity.SaleEntity;
+import com.todo1.hulkstore.service.IBuyService;
 import com.todo1.hulkstore.service.ISaleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,35 +14,35 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("saleController")
-@RequestMapping("/api/sale")
-public class SaleController {
+@RestController("buyController")
+@RequestMapping("/api/byu")
+public class BuyController {
     private HttpStatus status = HttpStatus.OK;
 
-    private static Logger LOG = LoggerFactory.getLogger(SaleController.class);
+    private static Logger LOG = LoggerFactory.getLogger(BuyController.class);
 
     @Autowired
     @Lazy
-    ISaleService saleService;
+    IBuyService buyService;
 
     @GetMapping
-    ResponseEntity<List<SaleEntity>> getAllSales() {
-        List<SaleEntity> result = null;
+    ResponseEntity<List<BuyEntity>> getAllBuys() {
+        List<BuyEntity> result = null;
 
         try {
-            result = saleService.getAllSales();
+            result = buyService.getAllBuys();
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-            LOG.error("ERROR in getAllSales",  e);
+            LOG.error("ERROR in getAllBuys",  e);
         }
         return new ResponseEntity<>(result, status);
     }
 
     @PostMapping
-    ResponseEntity<SaleEntity> save(@RequestBody SaleEntity sale) {
-        SaleEntity result = null;
+    ResponseEntity<BuyEntity> save(@RequestBody BuyEntity buy) {
+        BuyEntity result = null;
         try {
-            result = saleService.save(sale);
+            result = buyService.save(buy);
             status = HttpStatus.CREATED;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -50,10 +52,10 @@ public class SaleController {
     }
 
     @PutMapping
-    ResponseEntity<SaleEntity> update(@RequestBody SaleEntity sale) {
-        SaleEntity result = null;
+    ResponseEntity<BuyEntity> update(@RequestBody BuyEntity buy) {
+        BuyEntity result = null;
         try {
-            result = saleService.update(sale);
+            result = buyService.update(buy);
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;

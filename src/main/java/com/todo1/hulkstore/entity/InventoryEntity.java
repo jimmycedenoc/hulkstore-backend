@@ -18,9 +18,16 @@ public class InventoryEntity {
     @Column(name = "productcode")
     private Long productCode;
 
+    @Column(name = "buycode")
+    private Long buyCode;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALECODE", referencedColumnName = "ID", insertable = false, updatable = false)
     private SaleEntity saleEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BUYCODE", referencedColumnName = "ID", insertable = false, updatable = false)
+    private BuyEntity buyEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCTCODE", referencedColumnName = "ID", insertable = false, updatable = false)
@@ -29,11 +36,12 @@ public class InventoryEntity {
     public InventoryEntity() {
 
     }
-    public InventoryEntity(Date date, Long quantity, Long saleCode, Long productCode, Double unitValue, String detail) {
+    public InventoryEntity(Date date, Long quantity, Long saleCode, Long buyCode, Long productCode, Double unitValue, String detail) {
         this.date = date;
         this.quantity = quantity;
         this.saleCode = saleCode;
         this.productCode = productCode;
+        this.buyCode = buyCode;
         this.unitValue = unitValue;
         this.detail = detail;
     }
@@ -108,5 +116,21 @@ public class InventoryEntity {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Long getBuyCode() {
+        return buyCode;
+    }
+
+    public void setBuyCode(Long buyCode) {
+        this.buyCode = buyCode;
+    }
+
+    public BuyEntity getBuyEntity() {
+        return buyEntity;
+    }
+
+    public void setBuyEntity(BuyEntity buyEntity) {
+        this.buyEntity = buyEntity;
     }
 }

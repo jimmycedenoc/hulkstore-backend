@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("inventoryRepository")
 public interface InventoryRepository extends JpaRepository<InventoryEntity, Long> {
+    InventoryEntity getBySaleCode(Long saleCode);
+    InventoryEntity getByBuyCode(Long buyCode);
 }

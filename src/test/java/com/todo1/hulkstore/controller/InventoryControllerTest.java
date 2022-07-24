@@ -40,8 +40,8 @@ public class InventoryControllerTest {
     @Test
     void getAllInventories() throws Exception {
         List<InventoryEntity> inventoryEntityList = new ArrayList<InventoryEntity>();
-        inventoryEntityList.add(new InventoryEntity(new Date(), 2L, 1L, 1L, 10.25,"Compra"));
-        inventoryEntityList.add(new InventoryEntity(new Date(), 2L, 1L, 1L, 10.00, "Venta"));
+        inventoryEntityList.add(new InventoryEntity(new Date(), 2L, null, null, 1L, 10.25,"Compra"));
+        inventoryEntityList.add(new InventoryEntity(new Date(), 2L, null, null, 1L, 10.00, "Venta"));
         when(inventoryService.getAllInventories()).thenReturn(inventoryEntityList);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/inventory")
@@ -51,7 +51,7 @@ public class InventoryControllerTest {
 
     @Test
     void saveInventorySuccess() throws Exception {
-        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, 1L, 1L, 10.25, "Compra");
+        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, null, null, 1L, 10.25, "Compra");
         ObjectMapper objectMapper = new ObjectMapper();
         String inventoryJson = objectMapper.writeValueAsString(inventory);
 
@@ -64,7 +64,6 @@ public class InventoryControllerTest {
         );
         resultActions.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.quantity").value(2L))
-                .andExpect(jsonPath("$.saleCode").value(1L))
                 .andExpect(jsonPath("$.productCode").value(1L))
                 .andExpect(jsonPath("$.unitValue").value(10.25))
                 .andExpect(jsonPath("$.detail").value("Compra"));
@@ -72,7 +71,7 @@ public class InventoryControllerTest {
 
     @Test
     void updateInventorySuccess() throws Exception {
-        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, 1L, 1L, 10.25, "Compra");
+        InventoryEntity inventory = new InventoryEntity(new Date(), 2L, null, null, 1L, 10.25, "Compra");
         ObjectMapper objectMapper = new ObjectMapper();
         String inventoryJson = objectMapper.writeValueAsString(inventory);
 
@@ -85,7 +84,6 @@ public class InventoryControllerTest {
         );
         resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.quantity").value(2L))
-                .andExpect(jsonPath("$.saleCode").value(1L))
                 .andExpect(jsonPath("$.productCode").value(1L))
                 .andExpect(jsonPath("$.unitValue").value(10.25))
                 .andExpect(jsonPath("$.detail").value("Compra"));
