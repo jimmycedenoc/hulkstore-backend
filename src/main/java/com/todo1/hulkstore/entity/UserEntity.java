@@ -3,7 +3,7 @@ package com.todo1.hulkstore.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class UserEntity {
     @Id
     @GeneratedValue
