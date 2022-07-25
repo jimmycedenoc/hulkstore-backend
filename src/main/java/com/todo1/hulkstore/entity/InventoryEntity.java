@@ -1,5 +1,7 @@
 package com.todo1.hulkstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -23,14 +25,17 @@ public class InventoryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALECODE", referencedColumnName = "ID", insertable = false, updatable = false)
+    @JsonIgnore
     private SaleEntity saleEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BUYCODE", referencedColumnName = "ID", insertable = false, updatable = false)
+    @JsonIgnore
     private BuyEntity buyEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCTCODE", referencedColumnName = "ID", insertable = false, updatable = false)
+    @JsonIgnore
     private ProductEntity productEntity;
 
     public InventoryEntity() {

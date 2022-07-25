@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserEntity userEntity = userRepository.findByUsername(username);
 
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("USER"));
+        roles.add(new SimpleGrantedAuthority("ADMIN"));
 
         UserDetails userDetails = new User(userEntity.getUsername(), userEntity.getPassword(), roles);
 

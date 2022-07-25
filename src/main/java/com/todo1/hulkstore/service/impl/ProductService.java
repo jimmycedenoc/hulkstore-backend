@@ -50,9 +50,9 @@ public class ProductService implements IProductService {
         if(productEntity != null) {
             Long stock = null;
             if(inventoryType == InventoryType.SALE) {
-                stock = productEntity.getStock() - quantity;
+                stock = productEntity.getStock() != null && productEntity.getStock() > 0 ? productEntity.getStock() - quantity : quantity;
             } else {
-                stock = productEntity.getStock() + quantity;
+                stock = productEntity.getStock() != null && productEntity.getStock() > 0 ? productEntity.getStock() + quantity : quantity;
             }
             if (stock == null && stock < 0) {
                 throw new Exception("No puede quedar un stock negativo");

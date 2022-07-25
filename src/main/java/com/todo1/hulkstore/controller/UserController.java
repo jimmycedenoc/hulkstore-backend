@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +44,16 @@ public class UserController {
     @RequestMapping("/login")
     ResponseEntity<UserEntity> login(@RequestBody UserEntity user) {
         UserEntity result = null;
+        HttpHeaders responseHeaders = new HttpHeaders();
+
         try {
             result = userService.login(user);
             if (result != null && result.getUsername() != null) {
                 status = HttpStatus.OK;
             } else {
                 status = HttpStatus.UNAUTHORIZED;
+                responseHeaders.set("mes",
+                        "Usuario o contraseña incorrectos");
                 result = null;
             }
         } catch (Exception e) {
@@ -56,6 +61,6 @@ public class UserController {
             LOG.error("ERROR in save", e);
         }
 
-        return new ResponseEntity<>(result, status);
+        return new ResponseEntity<>(result, responseHeaders, status);
     }
 }

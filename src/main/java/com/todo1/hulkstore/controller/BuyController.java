@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("buyController")
-@RequestMapping("/api/byu")
+@RequestMapping("/api/buy")
 public class BuyController {
     private HttpStatus status = HttpStatus.OK;
 

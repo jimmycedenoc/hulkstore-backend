@@ -26,7 +26,7 @@ public class ProductController {
     @GetMapping
     ResponseEntity<List<ProductEntity>> getAllProducts() {
         List<ProductEntity> result = null;
-
+        status = HttpStatus.OK;
         try {
             result = productService.getAllProducts();
         } catch (Exception e) {

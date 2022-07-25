@@ -1,5 +1,7 @@
 package com.todo1.hulkstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class CategoryEntity {
     private String name;
     private boolean active;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryEntity")
+    @JsonIgnore
     private List<ProductEntity> productEntityList;
 
     public CategoryEntity(){
